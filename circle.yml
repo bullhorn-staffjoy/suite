@@ -41,7 +41,7 @@ stages:
           # Ideally, you would maybe delete old versions.
 
           # Database migration
-          sudo pip install -r requirements.txt
+          sudo pip install -r app/requirements.txt
           export SQLALCHEMY_DATABASE_URI="$DATABASE_CONFIG"
           python main.py db current
           echo "Beginning database migration . . . "
