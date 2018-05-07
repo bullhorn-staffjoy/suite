@@ -3,6 +3,7 @@ executorType: machine
 stages:
   build:
     steps:
+      - type: checkout
       - type: shell
         shell: /bin/bash
         command: |
