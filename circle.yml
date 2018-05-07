@@ -2,7 +2,6 @@ version: 2
 executorType: machine
 stages:
   build:
-    workDir: ~/staffjoy/
     steps:
       - type: shell
         shell: /bin/bash
