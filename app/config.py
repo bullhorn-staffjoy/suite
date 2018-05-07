@@ -52,7 +52,7 @@ class DefaultConfig:
     TWILIO_NUMBER = {
         # Country code to number. At least one is necessary that matches DEFAULT_COUNTRY_CODE in constants.py
         # e.g. 
-        "1": "1234567890",
+        "1": "6179413555",
     }
 
     #
