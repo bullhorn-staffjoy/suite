@@ -1,0 +1,82 @@
+version: 2
+executorType: machine
+stages:
+  build:
+    workDir: ~/staffjoy/
+    steps:
+      - type: shell
+        shell: /bin/bash
+        command: |
+          sudo apt-get update --yes
+          sudo apt-get install --yes wget pkg-config software-properties-common gcc
+          
+          docker pull ubuntu:14.04
+          file="Dockerrun.aws.json"
+          tag="master-${CIRCLE_BUILD_NUM}"
+          repo="bullhorn-staffjoy/suite"
+          s3Bucket="staffjoy-bullhorn-deploy"
+          s3Path="app/$tag/"
+          s3Key="$s3Path$file"
+
+          # Add version
+          sed -i "s/TAG/$tag/" $file
+
+          docker build -t $repo:$tag .
+
+          # Run tests (but not all becuase we don't have db and redis going yet)
+          # docker run -t $repo:$tag /bin/bash -c 'cd /src/ && make fmt-test && make py-lint'
+
+          docker push $repo:$tag
+
+          # Add the Dockerrun to S3 so that beanstalk can access it
+          aws s3 cp $file s3://$s3Bucket/$s3Path
+
+          # Create version
+          aws elasticbeanstalk create-application-version \
+              --application-name staffjoy-suite \
+              --version-label "$tag" \
+              --source-bundle "{\"S3Bucket\":\"$s3Bucket\",\"S3Key\":\"$s3Key\"}" 
+
+          # Note: AWS limits the number of application versions. if you hit an error here, we just manually clean up. 
+          # Ideally, you would maybe delete old versions.
+
+          # Database migration
+          sudo pip install -r requirements.txt
+          export SQLALCHEMY_DATABASE_URI="$DATABASE_CONFIG"
+          python main.py db current
+          echo "Beginning database migration . . . "
+          make db-deploy
+
+          # Deploy to stage
+          aws elasticbeanstalk update-environment \
+              --environment-name "staffjoy-suite-prod" \
+              --version-label "$tag"
+
+          # Polling to see whether deploy is done
+          deploystart=$(date +%s)
+          timeout=3000 # Seconds to wait before error
+          threshhold=$((deploystart + timeout))
+          while true; do
+              # Check for timeout
+              timenow=$(date +%s)
+              if [[ "$timenow" > "$threshhold" ]]; then
+                  echo "Timeout - $timeout seconds elapsed"
+                  exit 1
+              fi
+
+              # See what's deployed
+              version=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "staffjoy-suite-prod" --query "Environments[*].VersionLabel" --output text`
+              status=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "staffjoy-suite-prod" --query "Environments[*].Status" --output text`
+
+              if [ "$version" != "$tag" ]; then
+                  echo "Tag not updated (currently $version). Waiting."
+                  sleep 10
+                  continue
+              fi
+              if [ "$status" != "Ready" ]; then
+                  echo "System not Ready -it's $status. Waiting."
+                  sleep 10
+                  continue
+              fi
+              break
+          done
