@@ -8,7 +8,7 @@ stages:
         shell: /bin/bash
         command: |
           sudo apt-get update --yes
-          sudo apt-get install --yes wget pkg-config software-properties-common gcc
+          sudo apt-get install --yes wget pkg-config software-properties-common gcc libmysqlclient-dev python-software-properties python-mysqldb libmysqlclient-dev libffi-dev libssl-dev python-dev
           
           docker pull ubuntu:14.04
           file="Dockerrun.aws.json"
