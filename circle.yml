@@ -9,11 +9,12 @@ stages:
         command: |
           sudo apt-get update --yes
           sudo apt-get install --yes wget pkg-config software-properties-common gcc libmysqlclient-dev python-software-properties python-mysqldb libmysqlclient-dev libffi-dev libssl-dev python-dev build-essential python python-setuptools curl python-pip libssl-dev
+          npm install -g less
           
           docker pull ubuntu:14.04
           file="Dockerrun.aws.json"
           tag="master-${CIRCLE_BUILD_NUM}"
-          repo="275828782348.dkr.ecr.us-east-1.amazonaws.com/suite"
+          repo="275828782348.dkr.ecr.us-east-2.amazonaws.com/suite"
           s3Bucket="staffjoy-bullhorn-deploy"
           s3Path="app/$tag/"
           s3Key="$s3Path$file"
