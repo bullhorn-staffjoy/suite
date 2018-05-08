@@ -8,7 +8,7 @@ stages:
         shell: /bin/bash
         command: |
           sudo apt-get update --yes
-          sudo apt-get install --yes wget pkg-config software-properties-common gcc libmysqlclient-dev python-software-properties python-mysqldb libmysqlclient-dev libffi-dev libssl-dev python-dev
+          sudo apt-get install --yes wget pkg-config software-properties-common gcc libmysqlclient-dev python-software-properties python-mysqldb libmysqlclient-dev libffi-dev libssl-dev python-dev build-essential python python-setuptools curl python-pip libssl-dev
           
           docker pull ubuntu:14.04
           file="Dockerrun.aws.json"
@@ -41,7 +41,7 @@ stages:
           # Ideally, you would maybe delete old versions.
 
           # Database migration
-          sudo pip install -r requirements.txt
+          pip install -r requirements.txt
           export SQLALCHEMY_DATABASE_URI="$DATABASE_CONFIG"
           python main.py db current
           echo "Beginning database migration . . . "
