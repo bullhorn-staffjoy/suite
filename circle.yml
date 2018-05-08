@@ -24,7 +24,7 @@ stages:
 
           aws ecr get-login --no-include-email --region us-east-2
 
-          docker build -t $repo:$tag .
+          docker build -t $tag -t $repo:$tag .
 
           # Run tests (but not all becuase we don't have db and redis going yet)
           # docker run -t $repo:$tag /bin/bash -c 'cd /src/ && make fmt-test && make py-lint'
