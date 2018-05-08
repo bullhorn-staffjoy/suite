@@ -12,12 +12,12 @@ stages:
           npm install -g less
           
           docker pull ubuntu:14.04
-          file="Dockerrun.aws.json"
-          tag="master-${CIRCLE_BUILD_NUM}"
-          repo="275828782348.dkr.ecr.us-east-2.amazonaws.com/suite"
-          s3Bucket="staffjoy-bullhorn-deploy"
-          s3Path="app/$tag/"
-          s3Key="$s3Path$file"
+          export file="Dockerrun.aws.json"
+          export tag="master-${CIRCLE_BUILD_NUM}"
+          export repo="275828782348.dkr.ecr.us-east-2.amazonaws.com/suite"
+          export s3Bucket="staffjoy-bullhorn-deploy"
+          export s3Path="app/$tag/"
+          export s3Key="$s3Path$file"
 
           # Add version
           sed -i "s/TAG/$tag/" $file
