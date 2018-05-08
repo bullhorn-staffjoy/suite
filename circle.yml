@@ -22,6 +22,8 @@ stages:
           # Add version
           sed -i "s/TAG/$tag/" $file
 
+          aws ecr get-login --no-include-email --region us-east-2
+
           docker build -t $repo:$tag .
 
           # Run tests (but not all becuase we don't have db and redis going yet)
