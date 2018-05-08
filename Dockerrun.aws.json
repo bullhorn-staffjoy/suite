@@ -5,7 +5,7 @@
     "Key": "docker.cfg"
   },
   "Image": {
-    "Name": "275828782348.dkr.ecr.us-east-2.amazonaws.com/suite",
+    "Name": "275828782348.dkr.ecr.us-east-2.amazonaws.com/suite:TAG",
     "Update": "true"
   },
   "Ports": [
