@@ -10,7 +10,7 @@ stages:
           sudo apt-get update --yes
           sudo apt-get install --yes wget pkg-config software-properties-common gcc libmysqlclient-dev python-software-properties python-mysqldb libmysqlclient-dev libffi-dev libssl-dev python-dev build-essential python python-setuptools curl python-pip libssl-dev
           npm install -g less
-          
+
           docker pull ubuntu:14.04
           file="Dockerrun.aws.json"
           tag="master-${CIRCLE_BUILD_NUM}"
@@ -22,12 +22,12 @@ stages:
           # Add version
           sed -i "s/TAG/$tag/" $file
 
-          docker build -t $repo:$tag .
+          docker build -t $repo .
 
           # Run tests (but not all becuase we don't have db and redis going yet)
           # docker run -t $repo:$tag /bin/bash -c 'cd /src/ && make fmt-test && make py-lint'
 
-          docker push $repo:$tag
+          docker push $repo
 
           # Add the Dockerrun to S3 so that beanstalk can access it
           aws s3 cp $file s3://$s3Bucket/$s3Path
