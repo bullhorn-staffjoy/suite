@@ -1,23 +1,23 @@
 {
-  AWSEBDockerrunVersion: "1",
-  Authentication: {
-    Bucket: "staffjoy-bullhorn-deploy",
-    Key: "docker.cfg"
+  "AWSEBDockerrunVersion": "1",
+  "Authentication": {
+    "Bucket": "staffjoy-bullhorn-deploy",
+    "Key": "docker.cfg"
   },
-  Image: {
-    Name: "275828782348.dkr.ecr.us-east-1.amazonaws.com/suite:TAG",
-    Update: "true"
+  "Image": {
+    "Name": "275828782348.dkr.ecr.us-east-1.amazonaws.com/suite:TAG",
+    "Update": "true"
   },
-  Ports: [
+  "Ports": [
     {
-      ContainerPort: "80"
+      "ContainerPort": "80"
     }
   ],
-  Volumes: [
+  "Volumes": [
     {
-      HostDirectory: "/var/app/mydb",
-      ContainerDirectory: "/etc/mysql"
+      "HostDirectory": "/var/app/mydb",
+      "ContainerDirectory": "/etc/mysql"
     }
   ],
-  Logging: "/var/log/nginx"
+  "Logging": "/var/log/nginx"
 }
