@@ -22,7 +22,7 @@ stages:
           # Add version
           sed -i "s/TAG/$tag/" $file
 
-          aws ecr get-login --no-include-email --region us-east-2
+          aws ecr get-login --no-include-email --region us-east-2 | sh
 
           docker build -t $tag -t $repo:$tag .
 
