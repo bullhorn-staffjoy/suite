@@ -46,6 +46,11 @@ class DefaultConfig:
     PAPERTRAIL = os.environ.get(
         "PAPERTRAIL")  # e.g. "logs.papertrailapp.com:1234"
 
+    # Email
+    SMTP_USER = os.environ.get("SMTP_USER")
+    SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
+    SMTP_HOST = "email-smtp.us-east-1.amazonaws.com"
+
     # Twilio
     TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
     TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
@@ -142,6 +147,8 @@ class DefaultConfig:
     # Native download links
     IPHONE_DOWNLOAD_LINK = "https://itunes.apple.com/us/app/staffjoy/id1087740570"
     ANDROID_DOWNLOAD_LINK = "https://play.google.com/store/apps/details?id=com.staffjoy.android"
+
+
 
     @staticmethod
     def init_app(app):
