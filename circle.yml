@@ -52,7 +52,7 @@ stages:
 
           # Deploy to stage
           aws elasticbeanstalk update-environment \
-              --environment-name "staffjoy-suite" \
+              --environment-name "bullhorn-suite" \
               --version-label "$tag"
 
           # Polling to see whether deploy is done
@@ -68,8 +68,8 @@ stages:
               fi
 
               # See what's deployed
-              version=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "staffjoy-suite" --query "Environments[*].VersionLabel" --output text`
-              status=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "staffjoy-suite" --query "Environments[*].Status" --output text`
+              version=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "bullhorn-suite" --query "Environments[*].VersionLabel" --output text`
+              status=`aws elasticbeanstalk describe-environments --application-name "staffjoy-suite" --environment-name "bullhorn-suite" --query "Environments[*].Status" --output text`
 
               if [ "$version" != "$tag" ]; then
                   echo "Tag not updated (currently $version). Waiting."
