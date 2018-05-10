@@ -37,8 +37,8 @@ def _send_email(self, to, subject, html_body):
             "Not sending email to %s becuase it is blacklisted" % to)
         return
 
-    current_app.logger.info("Sending an email to %s - subject '%s'" %
-                            (to, subject))
+    current_app.logger.info("Sending an email to %s - subject '%s' - body %s" %
+                            (to, subject, html_body))
 
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
