@@ -466,7 +466,8 @@ class User(UserMixin, db.Model):
 
     def intercom_settings(self, org_id=None):
         """ Data for Intercom, json-encoded """
-
+        return {};
+        
         data = {
             "user_id":
             str(self.id),
