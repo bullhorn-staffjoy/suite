@@ -16,7 +16,7 @@ from app.auth.forms import SignUpForm, LoginForm, RequestPasswordResetForm, \
         VerifyPhoneNumberForm, RemovePhoneNumberForm
 from app.models import User, ApiKey, Organization
 
-from app.email import send_email
+from app.emailer import send_email
 from app.plans import plans
 from app.helpers import is_native
 from app.constants import PHONE_COUNTRY_CODE_TO_COUNTRY

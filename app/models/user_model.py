@@ -18,7 +18,7 @@ from flask.ext.login import UserMixin
 from app import db, login_manager
 from app.constants import SECONDS_PER_HOUR, SECONDS_PER_DAY
 from app.caches import Shifts2Cache, SessionCache, PhoneVerificationCache
-from app.email import send_email
+from app.emailer import send_email
 from app.limiters import UserActivationReminderLimiter, PingLimiter
 from app.sms import send_sms
 
