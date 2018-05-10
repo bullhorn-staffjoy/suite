@@ -102,6 +102,7 @@ class User(UserMixin, db.Model):
             self.logout_all_sessions()
 
     def ping(self, org_id=None):
+        return
         """Update the last-seen time, and send tracking info to intercom"""
         if not PingLimiter.allowed_to_send(self):
             return
